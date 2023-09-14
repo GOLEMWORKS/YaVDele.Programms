@@ -5,7 +5,7 @@ namespace YaVDele.CalculatorGrant
 {
     public static class MauiProgram
     {
-        public static MauiApp CreateMauiApp()
+        public static MauiApp CreateMauiApp()   
         {
             var builder = MauiApp.CreateBuilder();
             builder
@@ -13,6 +13,20 @@ namespace YaVDele.CalculatorGrant
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+
+                //Шрифты ЯВделе
+
+                    //avenir
+                    fonts.AddFont("avenirnextcyr-bold.ttf", "AvenirNextCyrBold");
+                    fonts.AddFont("avenirnextcyr-demi.ttf", "AvenirNextCyrDemi");
+                    fonts.AddFont("avenirnextcyr-medium.ttf", "AvenirNextCyrMedium");
+                    fonts.AddFont("avenitnextcyr-regular.ttf", "AvenirNextCyrRegular");
+
+                    //maler
+                    fonts.AddFont("Maler.ttf", "Maler");
+
+                    //beachwood
+                    fonts.AddFont("beachwood.otf", "Beachwood");
                 });
 
             builder.Services.AddMauiBlazorWebView();
