@@ -1,7 +1,8 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('avenir_next_cyr.css');
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: AvenirNextCyr-Regular, AvenirNextCyr-Demi, AvenirNextCyr-Thin, AvenirNextCyr-Bold, Maler-regular, sans-serif
 }
 
 h1:focus {
