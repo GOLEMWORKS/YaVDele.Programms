@@ -1,0 +1,25 @@
+﻿@page "/gcalc"
+@inject Calculations calc
+
+<h3>Грантовый калькулятор</h3>
+
+<EditForm Model="@calcModel" OnValidSubmit="OnSubmit">
+    <InputNumber id="gA" @bind-Value="grantAmount" />
+    <InputNumber id="gA" @bind-Value="teamHelp" />
+    <button class="btn btn-success" type="submit"> Посчитать! </button>
+</EditForm>
+
+<h1> Объём софинансирования составляет не более @res рублей.</h1>
+
+@code {
+    GrantCalculatorModel calcModel = new();
+
+    public double grantAmount;
+    public double teamHelp;
+    public double res;
+
+    public void OnSubmit()
+    {
+        res = calc.CalculateSofinans(grantAmount, teamHelp);
+    }
+}
