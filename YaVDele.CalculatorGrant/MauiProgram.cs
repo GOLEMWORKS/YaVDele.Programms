@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using YaVDele.CalculatorGrant.Data;
-using YaVDele.CalculatorGrant.WinUI;
 
 namespace YaVDele.CalculatorGrant
 {
@@ -30,6 +29,7 @@ namespace YaVDele.CalculatorGrant
                     fonts.AddFont("beachwood.otf", "Beachwood");
                 });
 
+            builder.Services.AddLocalization();
             builder.Services.AddMauiBlazorWebView();
 
 #if DEBUG
