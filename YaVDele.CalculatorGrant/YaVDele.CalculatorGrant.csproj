@@ -38,6 +38,7 @@
         <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
         <PackageCertificateThumbprint>1DDD0007BC093E579B7147C1ECE8F3A417904864</PackageCertificateThumbprint>
         <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+        <NeutralLanguage>ru</NeutralLanguage>
     </PropertyGroup>
 
     <ItemGroup>
