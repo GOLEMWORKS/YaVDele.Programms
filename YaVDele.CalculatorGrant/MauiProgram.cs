@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using YaVDele.CalculatorGrant.Data;
+using YaVDele.CalculatorGrant.WinUI;
 
 namespace YaVDele.CalculatorGrant
 {
@@ -32,7 +33,7 @@ namespace YaVDele.CalculatorGrant
             builder.Services.AddMauiBlazorWebView();
 
 #if DEBUG
-		builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
 #endif
 
