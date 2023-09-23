@@ -8,11 +8,6 @@ namespace YaVDele.CalculatorGrant.Data
 {
     public class Calculations
     {
-        public Calculations()
-        {
-            
-        }
-
         public string init()
         {
             string r = "calculations initialized";
