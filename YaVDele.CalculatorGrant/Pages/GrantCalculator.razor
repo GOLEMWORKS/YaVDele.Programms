@@ -5,12 +5,20 @@
 
 <EditForm Model="@calcModel" OnValidSubmit="OnSubmit">
     <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
 
     <div class="form-group">
+        <label for="gA">Объём гранта: </label><br/>
         <InputNumber id="gA" @bind-Value="calcModel.grantAmount" />
     </div>
     
-    <InputNumber id="tH" @bind-Value="calcModel.teamHelp" />
+    <div class="form-group">
+        <label for="tH">Объём ресурсов команды: </label><br />
+        <InputNumber id="tH" @bind-Value="calcModel.teamHelp" />
+    </div>
+
+    <br />
+    
     <button class="btn btn-success" type="submit"> Посчитать! </button>
 </EditForm>
 
