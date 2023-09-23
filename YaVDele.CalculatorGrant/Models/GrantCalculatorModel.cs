@@ -16,7 +16,7 @@ namespace YaVDele.CalculatorGrant.Models
 
         public bool ValidateTeamHelp()
         {
-            if (teamHelp != 0 && ((grantAmount / 100) * 30) >= teamHelp) return true;
+            if (((grantAmount / 100) * 30) >= teamHelp) return true;
             return false;
         }
 
