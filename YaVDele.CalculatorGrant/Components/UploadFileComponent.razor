@@ -3,8 +3,8 @@
 <InputFile OnChange="@uploadAFile"></InputFile>
 
 @code {
-    public void uploadAFile()
+    public void uploadAFile(InputFileChangeEventArgs eventArgs)
     {
-        
+        StreamReader reader = new StreamReader(eventArgs);
     }
 }
