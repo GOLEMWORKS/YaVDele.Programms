@@ -1,10 +1,12 @@
-﻿<h3>UploadFile Component</h3>
+﻿@inject FileUpload fileUpload
 
-<InputFile OnChange="@uploadAFile"></InputFile>
+<h3>UploadFile Component</h3>
+
+<InputFile OnChange="@uploadAFile" multiple></InputFile>
 
 @code {
-    public void uploadAFile(InputFileChangeEventArgs eventArgs)
+    public async Task uploadAFile(InputFileChangeEventArgs e)
     {
-        StreamReader reader = new StreamReader(eventArgs);
+        await fileUpload.LoadFiles(e);
     }
 }

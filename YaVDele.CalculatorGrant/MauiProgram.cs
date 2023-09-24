@@ -39,6 +39,8 @@ namespace YaVDele.CalculatorGrant
 
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddSingleton<Calculations>();
+            builder.Services.AddSingleton<JSONReader>();
+            builder.Services.AddSingleton<FileUpload>();
 
             return builder.Build();
         }
