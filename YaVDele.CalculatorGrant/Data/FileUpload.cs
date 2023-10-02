@@ -10,6 +10,16 @@ namespace YaVDele.CalculatorGrant.Data
 
     public class FileUpload
     {
+        public async Task LoadFiles(InputFileChangeEventArgs eventArgs) {  
+            string mainDir = FileSystem.Current.AppDataDirectory;
+            string fileName = eventArgs.File.Name;
+            string currentFilePath = Path.Combine(mainDir, fileName);
+        }
 
+        public string mainDir()
+        {
+            string mainDir = FileSystem.Current.AppDataDirectory;
+            return mainDir;
+        }
     }
 }

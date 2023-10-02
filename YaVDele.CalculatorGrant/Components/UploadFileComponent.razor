@@ -4,9 +4,19 @@
 
 <InputFile OnChange="@uploadAFile" multiple></InputFile>
 
+<button onclick="@infoStatus"></button>
+<h1>@result</h1>
+
 @code {
+    public string result;
+
     public async Task uploadAFile(InputFileChangeEventArgs e)
     {
         await fileUpload.LoadFiles(e);
+    }
+
+    public void infoStatus()
+    {
+        result = fileUpload.mainDir();
     }
 }
