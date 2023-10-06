@@ -17,7 +17,7 @@ namespace YaVDele.CalculatorGrant.Data
                 string mainDir = FileSystem.Current.AppDataDirectory;
                 string uploadDir = Path.Combine(mainDir, "Uploads");   
 
-                if (!Directory.Exists(uploadDir))
+                if (!Directory.Exists(uploadDir)) //сделать отдельной функцией
                 {
                     //создать папку uploads
                     Directory.CreateDirectory(uploadDir);
