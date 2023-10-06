@@ -15,8 +15,16 @@ namespace YaVDele.CalculatorGrant.Data
             foreach (var file in files)
             {
                 string mainDir = FileSystem.Current.AppDataDirectory;
+                string uploadDir = Path.Combine(mainDir, "Uploads");   
+
+                if (!Directory.Exists(uploadDir))
+                {
+                    //создать папку uploads
+                    Directory.CreateDirectory(uploadDir);
+                }
+
                 string fileName = file.Name;
-                string currentFilePath = Path.Combine(mainDir, fileName);
+                string currentFilePath = Path.Combine(uploadDir, fileName);
 
                 Stream stream = file.OpenReadStream();
                 FileStream fs = File.Create(currentFilePath);
@@ -30,6 +38,13 @@ namespace YaVDele.CalculatorGrant.Data
         {
             string mainDir = FileSystem.Current.AppDataDirectory;
             return mainDir;
+        }
+
+        public int fileCountInFoleder()
+        {
+            string uploadDir = Path.Combine(mainDir(), "Uploads");
+            int filesInFolder = Directory.GetFiles(uploadDir).Length; 
+            return filesInFolder;
         }
     }
 }
