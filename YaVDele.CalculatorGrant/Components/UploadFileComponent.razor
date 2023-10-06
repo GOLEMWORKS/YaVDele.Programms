@@ -2,17 +2,34 @@
 
 <h3>UploadFile Component</h3>
 
-<InputFile OnChange="@uploadAFile" multiple></InputFile>
+<form @onsubmit="@OnSubmit">
+    <InputFile OnChange="@OnInputFileChange"></InputFile>
+    <button type="submit">Загрузить</button>
+</form>
+
+<h1>@Message</h1>
 
 <button onclick="@infoStatus"></button>
 <h1>@result</h1>
 
 @code {
+    public string Message;
+    IReadOnlyList<IBrowserFile> selectedFiles;
     public string result;
 
-    public async Task uploadAFile(InputFileChangeEventArgs e)
+    public async Task OnSubmit()
     {
-        await fileUpload.LoadFiles(e);
+        await fileUpload.LoadFiles(selectedFiles);
+
+        Message = $"{selectedFiles.Count} файл(ов) загружено.";
+    this.StateHasChanged();
+    }
+
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        selectedFiles = e.GetMultipleFiles();
+        Message = $"{selectedFiles.Count} файл(ов) выбрано.";
+        this.StateHasChanged();
     }
 
     public void infoStatus()
