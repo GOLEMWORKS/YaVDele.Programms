@@ -12,26 +12,26 @@ namespace YaVDele.CalculatorGrant.Data
     {
         public async Task LoadFiles(IReadOnlyList<IBrowserFile> files) {
 
-            foreach (var file in files)
+            if (files.Count != 0)
             {
-                string mainDir = FileSystem.Current.AppDataDirectory;
-                string uploadDir = Path.Combine(mainDir, "Uploads");   
+                foreach (var file in files)
+                    {
+                        string mainDir = FileSystem.Current.AppDataDirectory;
+                        string uploadDir = Path.Combine(mainDir, "Uploads");   
 
-                if (!Directory.Exists(uploadDir)) //сделать отдельной функцией
-                {
-                    //создать папку uploads
-                    Directory.CreateDirectory(uploadDir);
-                }
+                        CheckDirectoryForExistence(uploadDir);
 
-                string fileName = file.Name;
-                string currentFilePath = Path.Combine(uploadDir, fileName);
+                        string fileName = file.Name;
+                        string currentFilePath = Path.Combine(uploadDir, fileName);
 
-                Stream stream = file.OpenReadStream();
-                FileStream fs = File.Create(currentFilePath);
-                await stream.CopyToAsync(fs);
-                stream.Close();
-                fs.Close();
+                        Stream stream = file.OpenReadStream();
+                        FileStream fs = File.Create(currentFilePath);
+                        await stream.CopyToAsync(fs);
+                        stream.Close();
+                        fs.Close();
+                    }
             }
+            
         }
 
         public string mainDir()
@@ -45,6 +45,11 @@ namespace YaVDele.CalculatorGrant.Data
             string uploadDir = Path.Combine(mainDir(), "Uploads");
             int filesInFolder = Directory.GetFiles(uploadDir).Length; 
             return filesInFolder;
+        }
+
+        private void CheckDirectoryForExistence(string directory)
+        {
+            if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
         }
     }
 }

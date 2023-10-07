@@ -21,10 +21,18 @@
 
     public async Task OnSubmit()
     {
-        await fileUpload.LoadFiles(selectedFiles);
+        if (selectedFiles != null)
+        {
+           await fileUpload.LoadFiles(selectedFiles);
 
-        Message = $"{selectedFiles.Count} файл(ов) загружено.";
-        this.StateHasChanged();
+            Message = $"{selectedFiles.Count} файл(ов) загружено.";
+            this.StateHasChanged(); 
+        } else
+        {
+            Message = $"Вы не выбрали файл для загрузки!";
+            this.StateHasChanged();
+        }
+        
     }
 
     private void OnInputFileChange(InputFileChangeEventArgs e)
