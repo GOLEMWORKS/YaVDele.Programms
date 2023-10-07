@@ -1,0 +1,54 @@
+﻿@inject FileUpload fileUpload
+
+<h3>UploadFile Component</h3>
+
+<form @onsubmit="@OnSubmit">
+    <InputFile OnChange="@OnInputFileChange"></InputFile>
+    <button type="submit">Загрузить</button>
+</form>
+
+<h1>@Message</h1>
+
+<button onclick="@infoStatus">Main Directory</button>
+<button onclick="@filesInFolder">Count files</button>
+<h1>@result | @filesCount</h1>
+
+@code {
+    public string Message;
+    IReadOnlyList<IBrowserFile> selectedFiles;
+    public string result;
+    public int filesCount;
+
+    public async Task OnSubmit()
+    {
+        if (selectedFiles != null)
+        {
+           await fileUpload.LoadFiles(selectedFiles);
+
+            Message = $"{selectedFiles.Count} файл(ов) загружено.";
+            this.StateHasChanged(); 
+        } else
+        {
+            Message = $"Вы не выбрали файл для загрузки!";
+            this.StateHasChanged();
+        }
+        
+    }
+
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        selectedFiles = e.GetMultipleFiles();
+        Message = $"{selectedFiles.Count} файл(ов) выбрано.";
+        this.StateHasChanged();
+    }
+
+    public void infoStatus()
+    {
+        result = fileUpload.mainDir();
+    }
+
+    public void filesInFolder()
+    {
+        filesCount = fileUpload.fileCountInFoleder();
+    }
+}
