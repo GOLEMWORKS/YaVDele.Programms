@@ -16,8 +16,8 @@ namespace YaVDele.CalculatorGrant.Data
             {
                 foreach (var file in files)
                     {
-                        string mainDir = FileSystem.Current.AppDataDirectory;
-                        string uploadDir = Path.Combine(mainDir, "Uploads");   
+                        string MainDir = FileSystem.Current.AppDataDirectory;
+                        string uploadDir = Path.Combine(MainDir, "Uploads");   
 
                         CheckDirectoryForExistence(uploadDir);
 
@@ -34,15 +34,15 @@ namespace YaVDele.CalculatorGrant.Data
             
         }
 
-        public string mainDir()
+        public string MainDirOut()
         {
-            string mainDir = FileSystem.Current.AppDataDirectory;
-            return mainDir;
+            string MainDir = FileSystem.Current.AppDataDirectory;
+            return MainDir;
         }
 
         public int fileCountInFoleder()
         {
-            string uploadDir = Path.Combine(mainDir(), "Uploads");
+            string uploadDir = Path.Combine(MainDirOut(), "Uploads");
             int filesInFolder = Directory.GetFiles(uploadDir).Length; 
             return filesInFolder;
         }
