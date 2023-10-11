@@ -16,22 +16,32 @@ namespace YaVDele.CalculatorGrant.Data
             {
                 foreach (var file in files)
                     {
-                        string MainDir = FileSystem.Current.AppDataDirectory;
-                        string uploadDir = Path.Combine(MainDir, "Uploads");   
-
+                        string uploadDir = MainDirInit();   
                         CheckDirectoryForExistence(uploadDir);
 
                         string fileName = file.Name;
                         string currentFilePath = Path.Combine(uploadDir, fileName);
 
-                        Stream stream = file.OpenReadStream();
-                        FileStream fs = File.Create(currentFilePath);
-                        await stream.CopyToAsync(fs);
-                        stream.Close();
-                        fs.Close();
+                        FileStreamCreation(file, currentFilePath);
                     }
             }
             
+        }
+
+        public async void FileStreamCreation(IBrowserFile file, string currentFilePath)
+        {
+            Stream stream = file.OpenReadStream();
+            FileStream fs = File.Create(currentFilePath);
+            await stream.CopyToAsync(fs);
+            stream.Close();
+            fs.Close();
+        }
+
+        public string MainDirInit()
+        {
+            string MainDir = FileSystem.Current.AppDataDirectory;
+            string uploadDir = Path.Combine(MainDir, "Uploads");
+            return uploadDir;
         }
 
         public string MainDirOut()
