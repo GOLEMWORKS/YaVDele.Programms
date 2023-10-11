@@ -15,20 +15,20 @@ namespace YaVDele.CalculatorGrant.Data
             if (files.Count != 0)
             {
                 foreach (var file in files)
-                    {
-                        string uploadDir = MainDirInit();   
-                        CheckDirectoryForExistence(uploadDir);
+                {
+                    string uploadDir = MainDirInit();   
+                    CheckDirectoryForExistence(uploadDir);
 
-                        string fileName = file.Name;
-                        string currentFilePath = Path.Combine(uploadDir, fileName);
+                    string fileName = file.Name;
+                    string currentFilePath = Path.Combine(uploadDir, fileName);
 
-                        FileStreamCreation(file, currentFilePath);
-                    }
+                    await FileStreamCreation(file, currentFilePath);
+                }
             }
             
         }
 
-        public async void FileStreamCreation(IBrowserFile file, string currentFilePath)
+        public async Task FileStreamCreation(IBrowserFile file, string currentFilePath)
         {
             Stream stream = file.OpenReadStream();
             FileStream fs = File.Create(currentFilePath);
@@ -61,5 +61,10 @@ namespace YaVDele.CalculatorGrant.Data
         {
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
         }
+
+        //public string UploadFileException(string exception)
+        //{
+        //    throw new Exception(exception);
+        //}
     }
 }

@@ -3,8 +3,9 @@
 <h3>UploadFile Component</h3>
 
 <form @onsubmit="@OnSubmit">
-    <InputFile OnChange="@OnInputFileChange"></InputFile>
-    <button type="submit">Загрузить</button>
+    <InputFile OnChange="@OnInputFileChange" multiple></InputFile>
+    <button class="btn btn-success" 
+            type="submit">Загрузить</button>
 </form>
 
 <h1>@Message</h1>
@@ -21,6 +22,15 @@
 
     public async Task OnSubmit()
     {
+        foreach (var file in selectedFiles)
+        {
+            if (file.Size >= 512000)
+            {
+                Message = $"Файл {file.Name} не соотвествует максимальному объёму в 512КБ.\nТекущий размер файла {file.Size}КБ.";
+            } 
+            //Придумать как обрывается логика    
+        } 
+
         if (selectedFiles != null)
         {
            await fileUpload.LoadFiles(selectedFiles);
