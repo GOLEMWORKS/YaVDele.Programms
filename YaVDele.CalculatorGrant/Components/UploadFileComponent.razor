@@ -1,17 +1,30 @@
 ﻿@inject FileUpload fileUpload
 
-<h3>UploadFile Component</h3>
+<h3>Загрузка:</h3>
 
-<form @onsubmit="@OnSubmit">
-    <InputFile OnChange="@OnInputFileChange" multiple></InputFile>
-    <button class="btn btn-success" 
-            type="submit">Загрузить</button>
-</form>
+<div class="mb-3 row">
+    <form @onsubmit="@OnSubmit">
+
+        <div class="col-auto mb-3 ">
+            <label for="inputFile" class="btn btn-secondary me-1">
+                <InputFile id="inputFile" OnChange="@OnInputFileChange" class="d-none" />
+                <i class="oi oi-paperclip"></i> Выбрать файлы
+            </label>
+
+            <button type="submit" class="btn btn-success me-1">
+                <i class="oi oi-cloud-upload"></i> Загрузить
+            </button>
+
+            <input type="text" readonly class="form-control-plaintext" value="@Message"/>
+        </div>
+
+    </form>
+</div>
 
 <h1>@Message</h1>
 
-<button onclick="@infoStatus">Main Directory</button>
-<button onclick="@filesInFolder">Count files</button>
+<button onclick="@infoStatus">Директория</button>
+<button onclick="@filesInFolder">К-во файлов</button>
 <h1>@result | @filesCount</h1>
 
 @code {
@@ -22,27 +35,33 @@
 
     public async Task OnSubmit()
     {
-        foreach (var file in selectedFiles)
-        {
-            if (file.Size >= 512000)
-            {
-                Message = $"Файл {file.Name} не соотвествует максимальному объёму в 512КБ.\nТекущий размер файла {file.Size}КБ.";
-            } 
-            //Придумать как обрывается логика    
-        } 
+        bool isInRightSize = true;     
 
         if (selectedFiles != null)
         {
-           await fileUpload.LoadFiles(selectedFiles);
+            foreach (var file in selectedFiles)
+            {
+                if (file.Size >= 512000)
+                {
+                    Message = $"Файл {file.Name} не соотвествует максимальному объёму в 60КБ.\nТекущий размер файла {file.Size / 1024 / 8}КБ.";
+                    isInRightSize = false;
+                } 
+            }
 
-            Message = $"{selectedFiles.Count} файл(ов) загружено.";
+            if (isInRightSize)
+            {
+                await fileUpload.LoadFiles(selectedFiles);
+                filesInFolder();
+                Message = $"{selectedFiles.Count} файл(ов) успешно загружено. Всего в папке {filesCount} файлов";
+            }
+
             this.StateHasChanged(); 
         } else
         {
-            Message = $"Вы не выбрали файл для загрузки!";
+            if (Message == null) Message = $"Произошла неизвестная ошибка";
             this.StateHasChanged();
         }
-        
+
     }
 
     private void OnInputFileChange(InputFileChangeEventArgs e)
@@ -52,13 +71,8 @@
         this.StateHasChanged();
     }
 
-    public void infoStatus()
-    {
-        result = fileUpload.MainDirOut();
-    }
+    public void infoStatus() => result = fileUpload.MainDirOut();
 
-    public void filesInFolder()
-    {
-        filesCount = fileUpload.fileCountInFoleder();
-    }
+    public void filesInFolder() => filesCount = fileUpload.fileCountInFoleder();
+    
 }
