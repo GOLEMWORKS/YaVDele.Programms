@@ -50,11 +50,15 @@ namespace YaVDele.CalculatorGrant.Data
             return MainDir;
         }
 
-        public int fileCountInFoleder()
+        public string fileCountInFoleder()
         {
             string uploadDir = Path.Combine(MainDirOut(), "Uploads");
-            int filesInFolder = Directory.GetFiles(uploadDir).Length; 
-            return filesInFolder;
+            if (Directory.Exists(uploadDir))
+            {
+                int filesInFolder = Directory.GetFiles(uploadDir).Length;
+                return $"{filesInFolder}";
+            }
+            return "Директории не существует";
         }
 
         private void CheckDirectoryForExistence(string directory)
