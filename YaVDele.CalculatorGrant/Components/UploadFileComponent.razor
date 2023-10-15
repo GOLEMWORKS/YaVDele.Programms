@@ -43,7 +43,7 @@
             {
                 if (file.Size >= 512000)
                 {
-                    Message = $"Файл {file.Name} не соотвествует максимальному объёму в 60КБ.\nТекущий размер файла {file.Size / 1024 / 8}КБ.";
+                    Message = $"Ошибка. Файл {file.Name} не соотвествует максимальному объёму в 60КБ.\nТекущий размер файла {file.Size / 1024 / 8}КБ.";
                     isInRightSize = false;
                 } 
             }
@@ -58,7 +58,8 @@
             this.StateHasChanged(); 
         } else
         {
-            if (Message == null) Message = $"Произошла неизвестная ошибка";
+            filesInFolder();
+            if (Message == null) Message = $"Ошибка. {filesCount}";
             this.StateHasChanged();
         }
 
