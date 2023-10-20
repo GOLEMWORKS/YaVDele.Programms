@@ -2,7 +2,6 @@
 
 namespace YaVDele.CalculatorGrant.Data
 {
-
     //Загрузить файл в папку
     //Прочитать его содержимое
     //Десериализовать JSON
@@ -25,7 +24,6 @@ namespace YaVDele.CalculatorGrant.Data
                     await FileStreamCreation(file, currentFilePath);
                 }
             }
-            
         }
 
         public async Task FileStreamCreation(IBrowserFile file, string currentFilePath)
@@ -65,10 +63,5 @@ namespace YaVDele.CalculatorGrant.Data
         {
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
         }
-
-        //public string UploadFileException(string exception)
-        //{
-        //    throw new Exception(exception);
-        //}
     }
 }

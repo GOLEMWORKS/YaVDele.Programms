@@ -41,6 +41,7 @@ namespace YaVDele.CalculatorGrant
             builder.Services.AddSingleton<Calculations>();
             builder.Services.AddSingleton<JSONReader>();
             builder.Services.AddSingleton<FileUpload>();
+            builder.Services.AddSingleton<FolderVisualisation>();
 
             return builder.Build();
         }
