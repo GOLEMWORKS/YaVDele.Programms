@@ -26,6 +26,9 @@
 <button onclick="@infoStatus">Директория</button>
 <button onclick="@filesInFolder">К-во файлов</button>
 <h1>@result | @filesCount</h1>
+<hr />
+
+<FolderVizualizationComponent uploadDirectory="@fileUpload.MainDirInit()"></FolderVizualizationComponent>
 
 @code {
     public string Message;

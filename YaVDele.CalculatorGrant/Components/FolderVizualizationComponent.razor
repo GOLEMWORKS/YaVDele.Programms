@@ -1,9 +1,25 @@
-﻿@inject  FolderVisualisation folderVisualisation
+﻿@inject FolderVisualisation folderVisualisation
+@inject FileUpload fileUpload
 
 <h3>Folder Vizualization Component</h3>
+<h3>current directory: @uploadDirectory</h3>
+
+<ul>
+    @for (int i = 0; i < filesInFolders.Length; i++)
+    {
+        <li>@filesInFolders[i]</li>
+    }
+</ul>
 
 @code {
-    string[] takedFiles;
+    [Parameter]
+    [EditorRequired]
+    public string uploadDirectory { get; set; }
 
+    string[] filesInFolders;
 
+    protected override void OnInitialized()
+    {
+        filesInFolders = folderVisualisation.FileNamesInFolder(uploadDirectory);
+    }
 }
