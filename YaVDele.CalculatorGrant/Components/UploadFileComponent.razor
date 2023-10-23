@@ -1,34 +1,46 @@
 ﻿@inject FileUpload fileUpload
 
-<h3>Загрузка:</h3>
 
-<div class="mb-3 row">
-    <form @onsubmit="@OnSubmit">
+<div class="container">
 
-        <div class="col-auto mb-3 ">
-            <label for="inputFile" class="btn btn-secondary me-1">
-                <InputFile id="inputFile" OnChange="@OnInputFileChange" class="d-none" />
-                <i class="oi oi-paperclip"></i> Выбрать файлы
-            </label>
+    <div class="row">
+        <div class="col">
+            <div class="mb-3 row">
+                <h3>Загрузка:</h3>
+                <form @onsubmit="@OnSubmit">
 
-            <button type="submit" class="btn btn-success me-1">
-                <i class="oi oi-cloud-upload"></i> Загрузить
-            </button>
+                    <div class="col-auto mb-3 ">
+                        <label for="inputFile" class="btn btn-secondary me-1">
+                            <InputFile id="inputFile" OnChange="@OnInputFileChange" class="d-none" />
+                            <i class="oi oi-paperclip"></i> Выбрать файлы
+                        </label>
 
-            <input type="text" readonly class="form-control-plaintext" value="@Message"/>
+                        <button type="submit" class="btn btn-success me-1">
+                            <i class="oi oi-cloud-upload"></i> Загрузить
+                        </button>
+
+                        <textarea type="text" readonly class="form-control-plaintext" value="@Message" rows="5"/>
+                    </div>
+
+                </form>
+            </div>
+
+            <h1>@Message</h1>
+
+            <button onclick="@infoStatus">Директория</button>
+            <button onclick="@filesInFolder">К-во файлов</button>
+            <h1>@result | @filesCount</h1>
+            <hr />
         </div>
 
-    </form>
+        <div class="col">
+            <FolderVizualizationComponent 
+                uploadDirectory="@fileUpload.MainDirInit()"
+                filesInFolder="@filesCount"></FolderVizualizationComponent>
+        </div>
+    </div>
+    
 </div>
-
-<h1>@Message</h1>
-
-<button onclick="@infoStatus">Директория</button>
-<button onclick="@filesInFolder">К-во файлов</button>
-<h1>@result | @filesCount</h1>
-<hr />
-
-<FolderVizualizationComponent uploadDirectory="@fileUpload.MainDirInit()"></FolderVizualizationComponent>
 
 @code {
     public string Message;

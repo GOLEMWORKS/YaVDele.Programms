@@ -2,11 +2,11 @@
 {
     public class FolderVisualisation
     {
-        public string[] FileNamesInFolder(string folderPath)
+        public IEnumerable<string> FileNamesInFolder(string folderPath)
         {
-            string[] files = new string[Directory.GetFiles(folderPath).Length];
-            if(Directory.Exists(folderPath)) files = Directory.GetFiles(folderPath);
-            return files;
+            IEnumerable<string> files;
+            if(Directory.Exists(folderPath)) return files = Directory.GetFiles(folderPath).Select(x=> Path.GetFileName(x));
+            return null;
         }
 
     }
