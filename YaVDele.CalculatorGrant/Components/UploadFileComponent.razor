@@ -47,6 +47,12 @@
     public string result;
     public string filesCount;
 
+    protected override void OnInitialized()
+    {
+        result = fileUpload.MainDirInit();
+        fileUpload.CheckDirectoryForExistence(result);
+    }
+
     public async Task OnSubmit()
     {
         bool isInRightSize = true;     

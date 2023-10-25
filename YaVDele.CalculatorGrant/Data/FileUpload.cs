@@ -54,7 +54,7 @@ namespace YaVDele.CalculatorGrant.Data
             return "Директории не существует";
         }
 
-        private void CheckDirectoryForExistence(string directory)
+        public void CheckDirectoryForExistence(string directory)
         {
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
         }
