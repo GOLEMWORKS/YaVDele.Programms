@@ -4,6 +4,27 @@
 <h3>Folder Vizualization Component</h3>
 <h3>current directory: @uploadDirectory</h3>
 
+<div class="btn-group">
+    <button 
+        class="btn btn-danger"
+        type="button">
+        <i class="oi oi-trash"></i>
+        Удалить
+    </button>
+    <button 
+        class="btn btn-success"
+         type="button">
+        <i class="oi oi-book"></i>
+        Прочитать
+    </button>
+    <button 
+        class="btn btn-primary"
+        type="button">
+        <i class="oi oi-task"></i>
+        В Exel
+    </button>
+</div>
+
 <ul>
    @foreach (var item in filesInFolders)
     {
@@ -12,6 +33,8 @@
 </ul>
 
 @code {
+
+
     [Parameter]
     [EditorRequired]
     public string uploadDirectory { get; set; }
@@ -20,6 +43,8 @@
     [EditorRequired]
     public string filesInFolder { get; set; }
 
+
+
     IEnumerable<string> filesInFolders;
 
     protected override async Task OnParametersSetAsync() => await getFilesInDirectory();
@@ -27,5 +52,10 @@
     public async Task getFilesInDirectory()
     {
         filesInFolders = folderVisualisation.FileNamesInFolder(uploadDirectory);
+    }
+
+    private async Task SelectFile()
+    {
+        
     }
 }
