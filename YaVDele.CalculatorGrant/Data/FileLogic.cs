@@ -5,7 +5,7 @@
         public void FileDelete(string fileName)
         {
             string pathToDelete = Path.Combine(MainDirInit(), fileName);
-            Directory.Delete(pathToDelete);
+            if (File.Exists(pathToDelete)) File.Delete(pathToDelete);
         }
 
         public void FileReadAsTable(string path, string fileName)

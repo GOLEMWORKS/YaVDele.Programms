@@ -9,7 +9,7 @@
     <div class="btn-group">
         <button class="btn btn-outline-danger"
                 type="button"
-                onclick="@DeleteFile(SelectedFile)">
+                onclick="@Delete()">
             <i class="oi oi-trash"></i>
             Удалить
         </button>
@@ -69,13 +69,10 @@
         SelectedFile = fileName;
     }
 
-    async Task DeleteFile(string selectedFile)
+    public async Task Delete()
     {
-        if (selectedFile != null)
-        {
-            fileLogic.FileDelete(selectedFile);
-            this.StateHasChanged();  
-        }
-        
+        string fileName = SelectedFile;
+        fileLogic.FileDelete(fileName);
+        StateHasChanged();
     }
 }
