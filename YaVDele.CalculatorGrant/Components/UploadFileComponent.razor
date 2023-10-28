@@ -1,6 +1,5 @@
 ﻿@inject FileUpload fileUpload
 
-
 <div class="container">
 
     <div class="row">
@@ -35,7 +34,7 @@
         <div class="col md-2">
             <FolderVizualizationComponent 
                 uploadDirectory="@fileUpload.MainDirInit()"
-                filesInFolder="@filesCount"></FolderVizualizationComponent>
+                filesInFolder="@getFilesInFolder()"></FolderVizualizationComponent>
         </div>
     </div>
     
@@ -47,10 +46,12 @@
     public string result;
     public string filesCount;
 
-    protected override void OnInitialized()
+    protected override void OnInitialized() => fileUpload.CheckDirectoryForExistence(fileUpload.MainDirInit());
+
+    public List<FileObject> getFilesInFolder()
     {
-        result = fileUpload.MainDirInit();
-        fileUpload.CheckDirectoryForExistence(result);
+        List<FileObject> filesInFolder = fileUpload.GetFilesList();
+        return filesInFolder;
     }
 
     public async Task OnSubmit()
@@ -71,14 +72,14 @@
             if (isInRightSize)
             {
                 await fileUpload.LoadFiles(selectedFiles);
-                filesInFolder();
+                countFilesInFolder();
                 Message = $"{selectedFiles.Count} файл(ов) успешно загружено. Всего в папке {filesCount} файла(ов)";
             }
 
             this.StateHasChanged(); 
         } else
         {
-            filesInFolder();
+            countFilesInFolder();
             if (Message == null) Message = $"Выберите файо для загрузки! В текущей папке {filesCount} файла(ов)";
             this.StateHasChanged();
         }
@@ -94,6 +95,6 @@
 
     public void infoStatus() => result = fileUpload.MainDirOut();
 
-    public void filesInFolder() => filesCount = fileUpload.fileCountInFoleder();
+    public void countFilesInFolder() => filesCount = fileUpload.FileCountInFoleder();
     
 }

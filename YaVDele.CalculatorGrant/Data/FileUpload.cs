@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
+using YaVDele.CalculatorGrant.Data.Objects;
 
 namespace YaVDele.CalculatorGrant.Data
 {
@@ -43,9 +44,9 @@ namespace YaVDele.CalculatorGrant.Data
             return MainDir;
         }
 
-        public string fileCountInFoleder()
+        public string FileCountInFoleder()
         {
-            string uploadDir = Path.Combine(MainDirOut(), "Uploads");
+            string uploadDir = MainDirInit();
             if (Directory.Exists(uploadDir))
             {
                 int filesInFolder = Directory.GetFiles(uploadDir).Length;
@@ -57,6 +58,25 @@ namespace YaVDele.CalculatorGrant.Data
         public void CheckDirectoryForExistence(string directory)
         {
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+        }
+
+        public List<FileObject> GetFilesList()
+        {
+            string uploadDir = MainDirInit();
+            var filesInFolder = Directory.EnumerateFiles(uploadDir);
+
+            var fileObjectList = new List<FileObject>();
+
+            foreach ( var file in filesInFolder)
+            {
+                fileObjectList.Add(new FileObject()
+                {
+                    FileName = Path.GetFileName(file),
+                    FilePath = Path.GetDirectoryName(file)
+                });
+            }  
+            
+            return fileObjectList;
         }
     }
 }

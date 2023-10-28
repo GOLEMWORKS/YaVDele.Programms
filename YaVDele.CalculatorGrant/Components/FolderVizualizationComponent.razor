@@ -1,5 +1,4 @@
-﻿@inject FolderVisualisation folderVisualisation
-@inject FileUpload fileUpload
+﻿@inject FileUpload fileUpload
 @inject FileLogic fileLogic
 
 <h3>Folder Vizualization Component</h3>
@@ -9,7 +8,8 @@
     <div class="btn-group">
         <button class="btn btn-outline-danger"
                 type="button"
-                onclick="@Delete()">
+                @onclick="@((args) => DeleteSelectedFile())"
+                >
             <i class="oi oi-trash"></i>
             Удалить
         </button>
@@ -25,17 +25,17 @@
         </button>
     </div>
 
-    <i>@SelectedFile</i>
+    <i></i>
 </div>
 
 <div style="overflow-y: auto; max-height: 300px; border: 1px solid silver; padding-top: 3px;">
     <ul style="list-style-type:none">
-        @foreach (var item in filesInFolders)
+        @foreach (var item in filesInFolder)
         {
             <li 
             class="li-select-file"
             tabindex="1"
-            @onclick="@(async() => {await SelectFile(item); })">@item</li>
+            @onclick="@((args) => SelectFile(item))">@item.FileName</li>
         }
     </ul>
 </div>
@@ -50,29 +50,27 @@
 
     [Parameter]
     [EditorRequired]
-    public string filesInFolder { get; set; }
+    public List<FileObject> filesInFolder { get; set; }
 
     [Parameter]
-    public EventCallback<string> OnSelectFileName { get; set; }
+    public EventCallback<List<FileObject>> filesInFolderChanged { get; set; }
 
-    private string? SelectedFile;
+    FileObject selectedFileObject = null;
 
-    IEnumerable<string> filesInFolders;
-
-    protected override async Task OnParametersSetAsync() => await getFilesInDirectory();
-
-    public async Task getFilesInDirectory() =>  filesInFolders = folderVisualisation.FileNamesInFolder(uploadDirectory);
-
-    private async Task SelectFile(string fileName)
+    void SelectFile(FileObject file)
     {
-        await OnSelectFileName.InvokeAsync(fileName);
-        SelectedFile = fileName;
+        selectedFileObject = new FileObject{
+                FileName = file.FileName,
+                FilePath = file.FilePath
+        };
     }
 
-    public async Task Delete()
+    async Task DeleteSelectedFile()
     {
-        string fileName = SelectedFile;
-        fileLogic.FileDelete(fileName);
-        StateHasChanged();
+        if (selectedFileObject != null)
+        {
+            fileLogic.FileDelete(selectedFileObject.FileName);
+            await filesInFolderChanged.InvokeAsync();
+        }
     }
 }

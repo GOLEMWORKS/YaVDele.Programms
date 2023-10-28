@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using YaVDele.CalculatorGrant.Data;
+using YaVDele.CalculatorGrant.Data.Objects;
 
 namespace YaVDele.CalculatorGrant
 {
@@ -37,12 +38,13 @@ namespace YaVDele.CalculatorGrant
 		    builder.Logging.AddDebug();
 #endif
 
+            builder.Services.AddSingleton<FileObject>();
+
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddSingleton<Calculations>();
             builder.Services.AddSingleton<JSONReader>();
             builder.Services.AddSingleton<FileUpload>();
             builder.Services.AddSingleton<FileLogic>();
-            builder.Services.AddSingleton<FolderVisualisation>();
 
             return builder.Build();
         }
