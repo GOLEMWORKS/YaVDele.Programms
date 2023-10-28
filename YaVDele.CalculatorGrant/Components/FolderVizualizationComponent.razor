@@ -4,33 +4,40 @@
 <h3>Folder Vizualization Component</h3>
 <h3>current directory: @uploadDirectory</h3>
 
-<div class="btn-group">
-    <button 
-        class="btn btn-danger"
-        type="button">
-        <i class="oi oi-trash"></i>
-        Удалить
-    </button>
-    <button 
-        class="btn btn-success"
-         type="button">
-        <i class="oi oi-book"></i>
-        Прочитать
-    </button>
-    <button 
-        class="btn btn-primary"
-        type="button">
-        <i class="oi oi-task"></i>
-        В Exel
-    </button>
+<div class="input-group">
+    <div class="btn-group">
+        <button class="btn btn-danger"
+                type="button">
+            <i class="oi oi-trash"></i>
+            Удалить
+        </button>
+        <button class="btn btn-success"
+                type="button">
+            <i class="oi oi-book"></i>
+            Прочитать
+        </button>
+        <button class="btn btn-primary"
+                type="button">
+            <i class="oi oi-task"></i>
+            В Exel
+        </button>
+    </div>
+
+    <i>@SelectedFile</i>
 </div>
 
-<ul>
-   @foreach (var item in filesInFolders)
-    {
-        <li style="cursor: pointer">@item</li>
-    }
-</ul>
+<div style="overflow-y: auto; max-height: 300px; border: 1px solid silver; padding-top: 3px;">
+    <ul style="list-style-type:none">
+        @foreach (var item in filesInFolders)
+        {
+            <li 
+            class="li-select-file"
+            tabindex="1"
+            @onclick="@(async() => {await SelectFile(item); })">@item</li>
+        }
+    </ul>
+</div>
+
 
 @code {
 
@@ -43,7 +50,10 @@
     [EditorRequired]
     public string filesInFolder { get; set; }
 
+    [Parameter]
+    public EventCallback<string> OnSelectFileName { get; set; }
 
+    private string? SelectedFile;
 
     IEnumerable<string> filesInFolders;
 
@@ -54,8 +64,9 @@
         filesInFolders = folderVisualisation.FileNamesInFolder(uploadDirectory);
     }
 
-    private async Task SelectFile()
+    private async Task SelectFile(string fileName)
     {
-        
+        await OnSelectFileName.InvokeAsync(fileName);
+        SelectedFile = fileName;
     }
 }
