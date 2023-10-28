@@ -1,5 +1,6 @@
 ﻿@inject FolderVisualisation folderVisualisation
 @inject FileUpload fileUpload
+@inject FileLogic fileLogic
 
 <h3>Folder Vizualization Component</h3>
 <h3>current directory: @uploadDirectory</h3>
@@ -7,7 +8,8 @@
 <div class="input-group input-group-sm mb-3">
     <div class="btn-group">
         <button class="btn btn-outline-danger"
-                type="button">
+                type="button"
+                onclick="@DeleteFile(SelectedFile)">
             <i class="oi oi-trash"></i>
             Удалить
         </button>
@@ -59,14 +61,21 @@
 
     protected override async Task OnParametersSetAsync() => await getFilesInDirectory();
 
-    public async Task getFilesInDirectory()
-    {
-        filesInFolders = folderVisualisation.FileNamesInFolder(uploadDirectory);
-    }
+    public async Task getFilesInDirectory() =>  filesInFolders = folderVisualisation.FileNamesInFolder(uploadDirectory);
 
     private async Task SelectFile(string fileName)
     {
         await OnSelectFileName.InvokeAsync(fileName);
         SelectedFile = fileName;
+    }
+
+    async Task DeleteFile(string selectedFile)
+    {
+        if (selectedFile != null)
+        {
+            fileLogic.FileDelete(selectedFile);
+            this.StateHasChanged();  
+        }
+        
     }
 }
