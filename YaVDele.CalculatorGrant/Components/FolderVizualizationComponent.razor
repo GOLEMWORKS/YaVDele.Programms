@@ -1,34 +1,36 @@
 ﻿@inject FileUpload fileUpload
 @inject FileLogic fileLogic
 
-<h3>Folder Vizualization Component</h3>
-<h3>current directory: @uploadDirectory</h3>
-
-<div class="input-group input-group-sm mb-3">
+<div class="input-group input-group-sm md-3">
     <div class="btn-group">
-        <button class="btn btn-outline-danger"
+        <button class="btn btn-danger"
                 type="button"
                 @onclick="@((args) => DeleteSelectedFile())"
                 >
             <i class="oi oi-trash"></i>
             Удалить
         </button>
-        <button class="btn btn-outline-success"
+        <button class="btn btn-success"
                 type="button">
             <i class="oi oi-book"></i>
             Прочитать
         </button>
-        <button class="btn btn-outline-primary"
+        <button class="btn btn-primary"
                 type="button">
-            <i class="oi oi"></i>
+            <i class="oi oi-arrow-circle-top"></i>
             В Exel
+        </button>
+        <button class="btn btn-primary"
+                type="button">
+            <i class="oi oi-share"></i>
+            Поделиться
         </button>
     </div>
 
     <i></i>
 </div>
 
-<div style="overflow-y: auto; max-height: 300px; border: 1px solid silver; padding-top: 3px;">
+<div style="overflow-y: auto; max-height: 300px; border: 1px solid silver; margin-top: 8px;">
     <ul style="list-style-type:none">
         @foreach (var item in getFilesInFolder())
         {
