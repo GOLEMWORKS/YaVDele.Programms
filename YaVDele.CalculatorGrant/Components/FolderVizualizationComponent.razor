@@ -72,7 +72,7 @@
     {
         if (selectedFileObject != null)
         {
-            fileLogic.FileDelete(selectedFileObject.FileName);
+            fileLogic.FileDelete(selectedFileObject);
             await filesInFolderChanged.InvokeAsync();
         }
     }

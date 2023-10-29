@@ -1,10 +1,12 @@
-﻿namespace YaVDele.CalculatorGrant.Data
+﻿using YaVDele.CalculatorGrant.Data.Objects;
+
+namespace YaVDele.CalculatorGrant.Data
 {
     public class FileLogic : FileUpload
     {
-        public void FileDelete(string fileName)
+        public void FileDelete(FileObject file)
         {
-            string pathToDelete = Path.Combine(MainDirInit(), fileName);
+            string pathToDelete = Path.Combine(file.FilePath, file.FileName);
             if (File.Exists(pathToDelete)) File.Delete(pathToDelete);
         }
 

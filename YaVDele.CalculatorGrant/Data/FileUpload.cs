@@ -31,18 +31,9 @@ namespace YaVDele.CalculatorGrant.Data
             fs.Close();
         }
 
-        public string MainDirInit()
-        {
-            string MainDir = FileSystem.Current.AppDataDirectory;
-            string uploadDir = Path.Combine(MainDir, "Uploads");
-            return uploadDir;
-        }
+        public string MainDirInit() => Path.Combine(FileSystem.Current.AppDataDirectory, "Uploads");
 
-        public string MainDirOut()
-        {
-            string MainDir = FileSystem.Current.AppDataDirectory;
-            return MainDir;
-        }
+        public string MainDirOut() => FileSystem.Current.AppDataDirectory;
 
         public string FileCountInFoleder()
         {
@@ -55,7 +46,7 @@ namespace YaVDele.CalculatorGrant.Data
             return "Директории не существует";
         }
 
-        public void CheckDirectoryForExistence(string directory)
+        public void CheckDirectoryForExistence(string directory) 
         {
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
         }
