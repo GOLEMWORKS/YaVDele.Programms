@@ -10,7 +10,7 @@
 
                     <div class="col-auto mb-3 ">
                         <label for="inputFile" class="btn btn-secondary me-1">
-                            <InputFile id="inputFile" OnChange="@OnInputFileChange" class="d-none" />
+                            <InputFile id="inputFile" OnChange="@OnInputFileChange" class="d-none" multiple/>
                             <i class="oi oi-paperclip"></i> Выбрать файлы
                         </label>
 
@@ -25,7 +25,7 @@
 
                @*  <button onclick="@infoStatus">Директория</button>
                 <button onclick="@filesInFolder">К-во файлов</button>
-                <p>@result | @filesCount</p>
+                <p>@infoStatus() | @filesCount</p>
                 <hr /> *@
 
             </div>   
@@ -45,8 +45,6 @@
 
     IReadOnlyList<IBrowserFile> selectedFiles;
     List<FileObject> fileObjects;
-
-    public string result;
     public string filesCount;
 
     protected override void OnInitialized() => fileUpload.CheckDirectoryForExistence(fileUpload.MainDirInit());
@@ -76,8 +74,7 @@
             this.StateHasChanged(); 
         } else
         {
-            countFilesInFolder();
-            if (Message == null) Message = $"Выберите файо для загрузки! В текущей папке {filesCount} файла(ов)";
+            if (Message == null) Message = $"Вы не выбрали файл для загрузки!";
             this.StateHasChanged();
         }
 
@@ -90,7 +87,7 @@
         this.StateHasChanged();
     }
 
-    public void infoStatus() => result = fileUpload.MainDirOut();
+    public string infoStatus() => fileUpload.MainDirOut();
 
     public void countFilesInFolder() => filesCount = fileUpload.FileCountInFoleder();
     
