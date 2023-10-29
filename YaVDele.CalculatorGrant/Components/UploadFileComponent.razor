@@ -34,7 +34,7 @@
         <div class="col md-2">
             <FolderVizualizationComponent 
                 uploadDirectory="@fileUpload.MainDirInit()"
-                filesInFolder="@getFilesInFolder()"></FolderVizualizationComponent>
+                @bind-filesInFolder="@fileObjects"></FolderVizualizationComponent>
         </div>
     </div>
     
@@ -42,17 +42,14 @@
 
 @code {
     public string Message;
+
     IReadOnlyList<IBrowserFile> selectedFiles;
+    List<FileObject> fileObjects;
+
     public string result;
     public string filesCount;
 
     protected override void OnInitialized() => fileUpload.CheckDirectoryForExistence(fileUpload.MainDirInit());
-
-    public List<FileObject> getFilesInFolder()
-    {
-        List<FileObject> filesInFolder = fileUpload.GetFilesList();
-        return filesInFolder;
-    }
 
     public async Task OnSubmit()
     {

@@ -30,7 +30,7 @@
 
 <div style="overflow-y: auto; max-height: 300px; border: 1px solid silver; padding-top: 3px;">
     <ul style="list-style-type:none">
-        @foreach (var item in filesInFolder)
+        @foreach (var item in getFilesInFolder())
         {
             <li 
             class="li-select-file"
@@ -42,20 +42,23 @@
 
 
 @code {
-
-
     [Parameter]
     [EditorRequired]
     public string uploadDirectory { get; set; }
 
     [Parameter]
-    [EditorRequired]
     public List<FileObject> filesInFolder { get; set; }
 
     [Parameter]
     public EventCallback<List<FileObject>> filesInFolderChanged { get; set; }
 
     FileObject selectedFileObject = null;
+
+    public List<FileObject> getFilesInFolder()
+    {
+        List<FileObject> filesInFolder = fileUpload.GetFilesList();
+        return filesInFolder;
+    }
 
     void SelectFile(FileObject file)
     {
