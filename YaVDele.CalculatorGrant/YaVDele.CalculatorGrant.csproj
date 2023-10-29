@@ -66,8 +66,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\Uploads\JSONs\" />
-      <Folder Include="wwwroot\Uploads\Other\" />
       <Folder Include="JSON\" />
     </ItemGroup>
 

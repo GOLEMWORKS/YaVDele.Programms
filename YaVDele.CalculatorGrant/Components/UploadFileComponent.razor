@@ -1,38 +1,83 @@
 ﻿@inject FileUpload fileUpload
 
-<h3>UploadFile Component</h3>
+<div class="container">
 
-<form @onsubmit="@OnSubmit">
-    <InputFile OnChange="@OnInputFileChange"></InputFile>
-    <button type="submit">Загрузить</button>
-</form>
+    <div class="row">
+        <div class="col md-2">
+            <div class="mb-3 row">
+                <h3>Загрузка:</h3>
+                <form @onsubmit="@OnSubmit">
 
-<h1>@Message</h1>
+                    <div class="col-auto mb-3 ">
+                        <label for="inputFile" class="btn btn-secondary me-1">
+                            <InputFile id="inputFile" OnChange="@OnInputFileChange" class="d-none" multiple/>
+                            <i class="oi oi-paperclip"></i> Выбрать файлы
+                        </label>
 
-<button onclick="@infoStatus">Main Directory</button>
-<button onclick="@filesInFolder">Count files</button>
-<h1>@result | @filesCount</h1>
+                        <button type="submit" class="btn btn-success me-1">
+                            <i class="oi oi-cloud-upload"></i> Загрузить
+                        </button>
+
+                        <textarea type="text" readonly class="form-control-plaintext" value="@Message" rows="5"/>
+                    </div>
+
+                </form>
+
+               @*  <button onclick="@infoStatus">Директория</button>
+                <button onclick="@filesInFolder">К-во файлов</button>
+                <p>@infoStatus() | @filesCount</p>
+                <hr /> *@
+
+            </div>   
+        </div>
+
+        <div class="col md-2">
+            <FolderVizualizationComponent 
+                uploadDirectory="@fileUpload.MainDirInit()"
+                @bind-filesInFolder="@fileObjects"></FolderVizualizationComponent>
+        </div>
+    </div>
+    
+</div>
 
 @code {
     public string Message;
+
     IReadOnlyList<IBrowserFile> selectedFiles;
-    public string result;
-    public int filesCount;
+    List<FileObject> fileObjects;
+    public string filesCount;
+
+    protected override void OnInitialized() => fileUpload.CheckDirectoryForExistence(fileUpload.MainDirInit());
 
     public async Task OnSubmit()
     {
+        bool isInRightSize = true;     
+
         if (selectedFiles != null)
         {
-           await fileUpload.LoadFiles(selectedFiles);
+            foreach (var file in selectedFiles)
+            {
+                if (file.Size >= 512000)
+                {
+                    Message = $"Ошибка. Файл {file.Name} не соотвествует максимальному объёму в 60КБ.\nТекущий размер файла {file.Size / 1024 / 8}КБ.";
+                    isInRightSize = false;
+                } 
+            }
 
-            Message = $"{selectedFiles.Count} файл(ов) загружено.";
+            if (isInRightSize)
+            {
+                await fileUpload.LoadFiles(selectedFiles);
+                countFilesInFolder();
+                Message = $"{selectedFiles.Count} файл(ов) успешно загружено. Всего в папке {filesCount} файла(ов)";
+            }
+
             this.StateHasChanged(); 
         } else
         {
-            Message = $"Вы не выбрали файл для загрузки!";
+            if (Message == null) Message = $"Вы не выбрали файл для загрузки!";
             this.StateHasChanged();
         }
-        
+
     }
 
     private void OnInputFileChange(InputFileChangeEventArgs e)
@@ -42,13 +87,8 @@
         this.StateHasChanged();
     }
 
-    public void infoStatus()
-    {
-        result = fileUpload.mainDir();
-    }
+    public string infoStatus() => fileUpload.MainDirOut();
 
-    public void filesInFolder()
-    {
-        filesCount = fileUpload.fileCountInFoleder();
-    }
+    public void countFilesInFolder() => filesCount = fileUpload.FileCountInFoleder();
+    
 }

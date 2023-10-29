@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
+using YaVDele.CalculatorGrant.Data.Objects;
 
 namespace YaVDele.CalculatorGrant.Data
 {
-
-    //Загрузить файл в папку
-    //Прочитать его содержимое
-    //Десериализовать JSON
-    //Работа с массивом, его вывод и т.д.
-
     public class FileUpload
     {
         public async Task LoadFiles(IReadOnlyList<IBrowserFile> files) {
@@ -15,41 +10,64 @@ namespace YaVDele.CalculatorGrant.Data
             if (files.Count != 0)
             {
                 foreach (var file in files)
-                    {
-                        string mainDir = FileSystem.Current.AppDataDirectory;
-                        string uploadDir = Path.Combine(mainDir, "Uploads");   
+                {
+                    string uploadDir = MainDirInit();   
+                    CheckDirectoryForExistence(uploadDir);
 
-                        CheckDirectoryForExistence(uploadDir);
+                    string fileName = file.Name;
+                    string currentFilePath = Path.Combine(uploadDir, fileName);
 
-                        string fileName = file.Name;
-                        string currentFilePath = Path.Combine(uploadDir, fileName);
-
-                        Stream stream = file.OpenReadStream();
-                        FileStream fs = File.Create(currentFilePath);
-                        await stream.CopyToAsync(fs);
-                        stream.Close();
-                        fs.Close();
-                    }
+                    await FileStreamCreation(file, currentFilePath);
+                }
             }
-            
         }
 
-        public string mainDir()
+        public async Task FileStreamCreation(IBrowserFile file, string currentFilePath)
         {
-            string mainDir = FileSystem.Current.AppDataDirectory;
-            return mainDir;
+            Stream stream = file.OpenReadStream();
+            FileStream fs = File.Create(currentFilePath);
+            await stream.CopyToAsync(fs);
+            stream.Close();
+            fs.Close();
         }
 
-        public int fileCountInFoleder()
+        public string MainDirInit() => Path.Combine(FileSystem.Current.AppDataDirectory, "Uploads");
+
+        public string MainDirOut() => FileSystem.Current.AppDataDirectory;
+
+        public string FileCountInFoleder()
         {
-            string uploadDir = Path.Combine(mainDir(), "Uploads");
-            int filesInFolder = Directory.GetFiles(uploadDir).Length; 
-            return filesInFolder;
+            string uploadDir = MainDirInit();
+            if (Directory.Exists(uploadDir))
+            {
+                int filesInFolder = Directory.GetFiles(uploadDir).Length;
+                return $"{filesInFolder}";
+            }
+            return "Директории не существует";
         }
 
-        private void CheckDirectoryForExistence(string directory)
+        public void CheckDirectoryForExistence(string directory) 
         {
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+        }
+
+        public List<FileObject> GetFilesList()
+        {
+            string uploadDir = MainDirInit();
+            var filesInFolder = Directory.EnumerateFiles(uploadDir);
+
+            var fileObjectList = new List<FileObject>();
+
+            foreach ( var file in filesInFolder)
+            {
+                fileObjectList.Add(new FileObject()
+                {
+                    FileName = Path.GetFileName(file),
+                    FilePath = Path.GetDirectoryName(file)
+                });
+            }  
+            
+            return fileObjectList;
         }
     }
 }

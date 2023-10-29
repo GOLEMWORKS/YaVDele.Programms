@@ -87,3 +87,11 @@ a, .btn-link {
 .nav-link-i {
     font-family: AvenirNextCyr-Bold;
 }
+
+.li-select-file{
+    cursor: pointer;
+}
+
+.li-select-file:focus{
+    font-weight: bold;
+}
