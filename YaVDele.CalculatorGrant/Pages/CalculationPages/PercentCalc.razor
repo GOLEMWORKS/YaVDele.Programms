@@ -1,0 +1,61 @@
+﻿@page "/gcalc/percent"
+@inject Calculations calc
+@inject NavigationManager navigationManager
+
+<h3>Рассчёт процентов</h3>
+<div class="list-group">
+    <h4 class="list-group-item list-group-item-action">Рассчёт процента от числа</h4>
+    <h4 class="list-group-item list-group-item-action" @onclick="@ShowDiff" style="cursor: pointer;">Разность процентов</h4>
+</div>
+
+@if (Diff)
+{
+    <EditForm Model="@modelDiff" OnValidSubmit="OnSubmitDiff">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <label for="fA">Первое значение</label><br />
+            <InputNumber @bind-Value="@modelDiff.firstAmount" id="fA"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="sA">Второе значение</label><br />
+            <InputNumber @bind-Value="@modelDiff.secondAmount" id="sA"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="fP">Процент первого</label><br />
+            <InputNumber @bind-Value="@modelDiff.firstPercent" id="fP"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="sP">Процент второго</label><br />
+            <InputNumber @bind-Value="@modelDiff.secondPercent" id="sP"></InputNumber>
+        </div>
+
+        <button class="btn btn-success" type="submit"> Посчитать </button>
+        <button class="btn btn-danger" type="button" @onclick="@Back"> Назад </button>
+        <h4> @resDiff </h4>
+    </EditForm>
+}
+@code {
+    PercentCalcModel modelDiff = new();
+    double resDiff;
+    double resPercent;
+
+    bool Percent = false;
+    bool Diff = false;
+
+    public void ShowDiff()
+    {
+        Diff = (Diff == false) ? true : false;
+    }
+
+    public void OnSubmitDiff()
+    {
+        resDiff = calc.CalculatePercentDifference(modelDiff.firstAmount, modelDiff.secondAmount, modelDiff.firstPercent, modelDiff.secondPercent);
+    }
+
+    public void Back()
+    {
+        navigationManager.NavigateTo("/gcalc");
+    }
+}

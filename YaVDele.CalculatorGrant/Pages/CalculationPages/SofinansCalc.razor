@@ -36,9 +36,7 @@
 
     public void OnSubmit()
     {
-        var grantAmount = calcModel.grantAmount;
-        var teamHelp = calcModel.teamHelp;
-        res = calc.CalculateSofinans(grantAmount, teamHelp);
+        res = calc.CalculateSofinans(calcModel.grantAmount, calcModel.teamHelp);
     }
 
     public void Back()

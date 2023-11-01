@@ -8,7 +8,7 @@
         public double CalculatePercent(double inputAmount, double inputPercent) 
             => Math.Round(inputAmount * (inputPercent / 100), 2);
         public double CalculatePercentDifference(double inputAmountOne, double inputAmountTwo, double percentFromOne, double percentFromTwo) 
-            => Math.Round((inputAmountOne * (percentFromOne / 100)) - (inputAmountTwo / (percentFromTwo / 100)), 2);
+            => Math.Round((inputAmountOne * (percentFromOne / 100)) - (inputAmountTwo * (percentFromTwo / 100)), 2);
         public double CalculateIndexation(double priceBefore, double priceAfter, int quantity = 1)
             => Math.Round((priceAfter - priceBefore) * quantity, 2);
         public double CalculateIndexationPercent(double priceBefore, double indexationPercent, int quantity = 1)
