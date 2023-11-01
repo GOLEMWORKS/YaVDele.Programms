@@ -23,19 +23,21 @@
             <InputNumber @bind-Value="@modelDiff.secondAmount" id="sA"></InputNumber>
         </div>
         <div class="form-group">
-            <label for="fP">Процент первого</label><br />
+            <label for="fP">Процент от первого</label><br />
             <InputNumber @bind-Value="@modelDiff.firstPercent" id="fP"></InputNumber>
         </div>
         <div class="form-group">
-            <label for="sP">Процент второго</label><br />
+            <label for="sP">Процент от второго</label><br />
             <InputNumber @bind-Value="@modelDiff.secondPercent" id="sP"></InputNumber>
         </div>
-
+        <br />
         <button class="btn btn-success" type="submit"> Посчитать </button>
         <button class="btn btn-danger" type="button" @onclick="@Back"> Назад </button>
-        <h4> @resDiff </h4>
+        <br />
+        <h4>@resDiff.ToString("c", new System.Globalization.CultureInfo("ru-RU"))</h4>
     </EditForm>
 }
+
 @code {
     PercentCalcModel modelDiff = new();
     double resDiff;
