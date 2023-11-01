@@ -1,37 +1,14 @@
 ﻿@page "/gcalc"
-@inject Calculations calc
 
-<h3>Грантовый калькулятор</h3>
+<div class="list-group">
+    <a href="/gcalc/sofinans" class="list-group-item list-group-item-action">Софинансирование</a>
+    <a href="#" class="list-group-item list-group-item-action">Работа с процентами</a>
+    <a href="#" class="list-group-item list-group-item-action">Работа с индексацией</a>
+    <a href="#" class="list-group-item list-group-item-action">null</a>
+    <a href="#" class="list-group-item list-group-item-action">null</a>
+</div>
 
-<EditForm Model="@calcModel" OnValidSubmit="OnSubmit">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <ValidationSummary></ValidationSummary>
+<a href="/gcalc/sofinans">Софинансирование</a>
+@code{
 
-    <div class="form-group">
-        <label for="gA">Объём гранта: </label><br/>
-        <InputNumber id="gA" @bind-Value="calcModel.grantAmount" />
-    </div>
-    
-    <div class="form-group">
-        <label for="tH">Объём ресурсов команды: </label><br />
-        <InputNumber id="tH" @bind-Value="calcModel.teamHelp" />
-    </div>
-
-    <br />
-    
-    <button class="btn btn-success" type="submit"> Посчитать! </button>
-</EditForm>
-
-<h4> Объём софинансирования составит не более @res рублей.</h4>
-
-@code {
-    GrantCalculatorModel calcModel = new();
-    public double res;
-
-    public void OnSubmit()
-    {
-        var grantAmount = calcModel.grantAmount;
-        var teamHelp = calcModel.teamHelp;
-        res = calc.CalculateSofinans(grantAmount, teamHelp);
-    }
 }
