@@ -4,7 +4,7 @@
 
 <h3>Рассчёт процентов</h3>
 <div class="list-group">
-    <h4 class="list-group-item list-group-item-action">Рассчёт процента от числа</h4>
+    <h4 class="list-group-item list-group-item-action" @onclick="@ShowPercent" style="cursor: pointer;">Процент от числа</h4>
     <h4 class="list-group-item list-group-item-action" @onclick="@ShowDiff" style="cursor: pointer;">Разность процентов</h4>
 </div>
 
@@ -32,11 +32,15 @@
         </div>
         <br />
         <button class="btn btn-success" type="submit"> Посчитать </button>
-        <button class="btn btn-danger" type="button" @onclick="@Back"> Назад </button>
         <br />
-        <h4>@resDiff.ToString("c", new System.Globalization.CultureInfo("ru-RU"))</h4>
+        <h4 style="margin-top: 5px;">@resDiff.ToString("c", new System.Globalization.CultureInfo("ru-RU"))</h4>
     </EditForm>
 }
+<br />
+<button class="btn btn-danger" type="button" @onclick="@Back"> 
+    <i class="oi oi-arrow-thick-left"></i>
+    Назад 
+</button>
 
 @code {
     PercentCalcModel modelDiff = new();
@@ -45,6 +49,11 @@
 
     bool Percent = false;
     bool Diff = false;
+
+    public void ShowPercent()
+    {
+        Percent = (Percent == false) ? true : false;
+    }
 
     public void ShowDiff()
     {
