@@ -8,6 +8,18 @@
     <h4 class="list-group-item list-group-item-action" @onclick="@ShowDiff" style="cursor: pointer;">Разность процентов</h4>
 </div>
 
+@if (Percent)
+{
+    <EditForm Model="@modelPercent" OnValidSubmit="OnSubmitDiff">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <h1>qwqeqewqweqew</h1>
+        </div>
+    </EditForm>
+}
+
 @if (Diff)
 {
     <EditForm Model="@modelDiff" OnValidSubmit="OnSubmitDiff">
@@ -44,6 +56,8 @@
 
 @code {
     PercentCalcModel modelDiff = new();
+    PercentModel modelPercent = new();
+
     double resDiff;
     double resPercent;
 
