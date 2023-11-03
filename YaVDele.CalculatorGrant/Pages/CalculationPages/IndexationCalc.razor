@@ -1,11 +1,10 @@
-﻿@page "/gcalc/percent"
+﻿@page "/gcalc/indexation"
 @inject Calculations calc
 @inject NavigationManager navigationManager
 
-<h3>Рассчёт процентов</h3>
 <div class="list-group">
-    <a class="list-group-item list-group-item-action" @onclick="@ShowPercent" style="cursor: pointer;">Процент от числа</a>
-    <a class="list-group-item list-group-item-action" @onclick="@ShowDiff" style="cursor: pointer;">Разность процентов</a>
+    <a class="list-group-item list-group-item-action" @onclick="@ShowIndex" style="cursor: pointer;">Рассчёт индексации</a>
+    <a class="list-group-item list-group-item-action" @onclick="@ShowPercent" style="cursor: pointer;">Рассчёт процента индексации</a>
 </div>
 
 @if (Percent)
@@ -49,9 +48,9 @@
     </EditForm>
 }
 <br />
-<button class="btn btn-danger" type="button" @onclick="@Back"> 
+<button class="btn btn-danger" type="button" @onclick="@Back">
     <i class="oi oi-arrow-thick-left"></i>
-    Назад 
+    Назад
 </button>
 
 @code {
@@ -69,7 +68,7 @@
         Percent = (Percent == false) ? true : false;
     }
 
-    public void ShowDiff()
+    public void ShowIndex()
     {
         Diff = (Diff == false) ? true : false;
     }
