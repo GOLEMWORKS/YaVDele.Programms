@@ -14,13 +14,15 @@
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
         <div class="form-group">
-            <label for="fPt">Значение</label>
+            <label for="fPt">Значение</label><br/>
             <InputNumber @bind-Value="@modelPercent.firstAmount" id="fPt"></InputNumber>
         </div>
         <div class="form-group">
-            <label for="sPt">Процент</label>
+            <label for="sPt">Процент</label><br/>
             <InputNumber @bind-Value="@modelPercent.percent"></InputNumber>
         </div>
+        <br/>
+        <button type="submit" class="btn btn-success" @onclick="@OnSubmitPercent">Посчитать</button>
         <br/>
         <h4 style="margin-top: 5px;">@resPercent.ToString()</h4>
     </EditForm>
@@ -51,7 +53,7 @@
         <br />
         <button class="btn btn-success" type="submit"> Посчитать </button>
         <br />
-        <h4 style="margin-top: 5px;">@resDiff.ToString("c", new System.Globalization.CultureInfo("ru-RU"))</h4>
+        <h4 style="margin-top: 5px;">@resDiff.ToString()</h4>
     </EditForm>
 }
 <br />
@@ -72,11 +74,13 @@
 
     public void ShowPercent()
     {
+        Diff = false;
         Percent = (Percent == false) ? true : false;
     }
 
     public void ShowDiff()
     {
+        Percent = false;
         Diff = (Diff == false) ? true : false;
     }
 
