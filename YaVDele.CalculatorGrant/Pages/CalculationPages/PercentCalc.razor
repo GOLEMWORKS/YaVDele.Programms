@@ -10,7 +10,7 @@
 
 @if (Percent)
 {
-    <EditForm Model="@modelPercent" OnValidSubmit="OnSubmitPercent">
+    <EditForm Model="@modelPercent" OnValidSubmit="OnSubmitPercent" id="Percent">
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
         <div class="form-group">
@@ -22,7 +22,7 @@
             <InputNumber @bind-Value="@modelPercent.percent"></InputNumber>
         </div>
         <br/>
-        <button type="submit" class="btn btn-success" @onclick="@OnSubmitPercent">Посчитать</button>
+        <button typeof="Percent" type="submit" class="btn btn-success">Посчитать</button>
         <br/>
         <h4 style="margin-top: 5px;">@resPercent.ToString()</h4>
     </EditForm>
@@ -30,7 +30,7 @@
 
 @if (Diff)
 {
-    <EditForm Model="@modelDiff" OnValidSubmit="OnSubmitDiff">
+    <EditForm Model="@modelDiff" OnValidSubmit="OnSubmitDiff" id="Diff">
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
 
@@ -51,7 +51,7 @@
             <InputNumber @bind-Value="@modelDiff.secondPercent" id="sP"></InputNumber>
         </div>
         <br />
-        <button class="btn btn-success" type="submit"> Посчитать </button>
+        <button class="btn btn-success" type="submit" typeof="Diff"> Посчитать </button>
         <br />
         <h4 style="margin-top: 5px;">@resDiff.ToString()</h4>
     </EditForm>

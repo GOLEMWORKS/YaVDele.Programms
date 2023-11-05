@@ -5,7 +5,7 @@ namespace YaVDele.CalculatorGrant.Models
     public class PercentModel
     {
         public double firstAmount { get; set; }
-        [Range(0, 100, ErrorMessage = "Это проценты. Максимум 100, минимум 0.")]
+        [Range(0, int.MaxValue)]
         public int percent { get; set; }
     }
 }
