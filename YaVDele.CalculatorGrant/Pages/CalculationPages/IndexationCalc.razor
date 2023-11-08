@@ -1,0 +1,94 @@
+﻿@page "/gcalc/indexation"
+@inject Calculations calc
+@inject NavigationManager navigationManager
+
+<div class="list-group">
+    <a class="list-group-item list-group-item-action" @onclick="@ShowIndex" style="cursor: pointer;">Рассчёт индексации</a>
+    <a class="list-group-item list-group-item-action" @onclick="@ShowIndexDiff" style="cursor: pointer;">Рассчёт процента индексации</a>
+</div>
+
+@if (Index)
+{
+    <EditForm Model="@modelIndexation" OnValidSubmit="OnSubmitIndex" id="Ind">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <label for="pB">Цена единицы товара до</label><br />
+            <InputNumber @bind-Value="@modelIndexation.priceBefore" id="pB"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="pA">Цена единицы товара после</label><br />
+            <InputNumber @bind-Value="@modelIndexation.priceAfter" id="pA"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="q">Количество</label><br />
+            <InputNumber @bind-Value="@modelIndexation.quantity" id="q"></InputNumber>
+        </div>
+        <br/>
+        <button type="submit" typeof="Ind" class="btn btn-success">Посчитать</button>
+        <br />
+        <h4 style="margin-top: 5px;">Результат: @resIndex </h4>
+    </EditForm>
+}
+
+@if (IndexDiff)
+{
+    <EditForm Model="@modelPercentIndexation" OnValidSubmit="OnSubmitIndexPercent" id="IndP">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <label for="pBp">Цена единицы товара до</label><br />
+            <InputNumber @bind-Value="@modelPercentIndexation.priceBefore" id="pBp"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="pAp">Процент индексации</label><br />
+            <InputNumber @bind-Value="@modelPercentIndexation.indexationPercent" id="pAp"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="qp">Количество</label><br />
+            <InputNumber @bind-Value="@modelPercentIndexation.quantity" id="qp"></InputNumber>
+        </div>
+        <br />
+        <button type="submit" typeof="IndP" class="btn btn-success">Посчитать</button>
+        <br />
+        <h4 style="margin-top: 5px;">Результат: @resPercent </h4>
+    </EditForm>
+}
+<br />
+<button class="btn btn-danger" type="button" @onclick="@Back">
+    <i class="oi oi-arrow-thick-left"></i>
+    Назад
+</button>
+
+@code {
+    IndexationModel modelIndexation = new();
+    IndexationPercentModel modelPercentIndexation = new();
+
+    double resIndex;
+    double resPercent;
+
+    bool Index = false;
+    bool IndexDiff = false;
+
+    public void ShowIndex()
+    {
+        IndexDiff = false;
+        Index = (Index == false) ? true : false;
+    }
+
+    public void ShowIndexDiff()
+    {
+        this.Index = false;
+        IndexDiff = (IndexDiff == false) ? true : false;
+    }
+
+    public void OnSubmitIndex() => resIndex = calc.CalculateIndexation(modelIndexation.priceBefore, modelIndexation.priceAfter, modelIndexation.quantity);
+    
+
+    public void OnSubmitIndexPercent() => resPercent = calc.CalculateIndexationPercent(modelPercentIndexation.priceBefore, modelPercentIndexation.indexationPercent, modelPercentIndexation.quantity);
+
+
+    public void Back() => navigationManager.NavigateTo("/gcalc");
+}

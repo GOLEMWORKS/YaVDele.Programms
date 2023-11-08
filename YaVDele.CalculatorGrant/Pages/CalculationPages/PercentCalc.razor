@@ -1,0 +1,101 @@
+﻿@page "/gcalc/percent"
+@inject Calculations calc
+@inject NavigationManager navigationManager
+
+<h3>Рассчёт процентов</h3>
+<div class="list-group">
+    <a class="list-group-item list-group-item-action" @onclick="@ShowPercent" style="cursor: pointer;">Процент от числа</a>
+    <a class="list-group-item list-group-item-action" @onclick="@ShowDiff" style="cursor: pointer;">Разность процентов</a>
+</div>
+
+@if (Percent)
+{
+    <EditForm Model="@modelPercent" OnValidSubmit="OnSubmitPercent" id="Percent">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+        <div class="form-group">
+            <label for="fPt">Значение</label><br/>
+            <InputNumber @bind-Value="@modelPercent.firstAmount" id="fPt"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="sPt">Процент</label><br/>
+            <InputNumber @bind-Value="@modelPercent.percent"></InputNumber>
+        </div>
+        <br/>
+        <button typeof="Percent" type="submit" class="btn btn-success">Посчитать</button>
+        <br/>
+        <h4 style="margin-top: 5px;">@resPercent.ToString()</h4>
+    </EditForm>
+}
+
+@if (Diff)
+{
+    <EditForm Model="@modelDiff" OnValidSubmit="OnSubmitDiff" id="Diff">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <label for="fA">Первое значение</label><br />
+            <InputNumber @bind-Value="@modelDiff.firstAmount" id="fA"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="sA">Второе значение</label><br />
+            <InputNumber @bind-Value="@modelDiff.secondAmount" id="sA"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="fP">Процент от первого</label><br />
+            <InputNumber @bind-Value="@modelDiff.firstPercent" id="fP"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="sP">Процент от второго</label><br />
+            <InputNumber @bind-Value="@modelDiff.secondPercent" id="sP"></InputNumber>
+        </div>
+        <br />
+        <button class="btn btn-success" type="submit" typeof="Diff"> Посчитать </button>
+        <br />
+        <h4 style="margin-top: 5px;">@resDiff.ToString()</h4>
+    </EditForm>
+}
+<br />
+<button class="btn btn-danger" type="button" @onclick="@Back"> 
+    <i class="oi oi-arrow-thick-left"></i>
+    Назад 
+</button>
+
+@code {
+    PercentCalcModel modelDiff = new();
+    PercentModel modelPercent = new();
+
+    double resDiff;
+    double resPercent;
+
+    bool Percent = false;
+    bool Diff = false;
+
+    public void ShowPercent()
+    {
+        Diff = false;
+        Percent = (Percent == false) ? true : false;
+    }
+
+    public void ShowDiff()
+    {
+        Percent = false;
+        Diff = (Diff == false) ? true : false;
+    }
+
+    public void OnSubmitPercent()
+    {
+        resPercent = calc.CalculatePercent(modelPercent.firstAmount, modelPercent.percent);  
+    }
+
+    public void OnSubmitDiff()
+    {
+        resDiff = calc.CalculatePercentDifference(modelDiff.firstAmount, modelDiff.secondAmount, modelDiff.firstPercent, modelDiff.secondPercent);
+    }
+
+    public void Back()
+    {
+        navigationManager.NavigateTo("/gcalc");
+    }
+}
