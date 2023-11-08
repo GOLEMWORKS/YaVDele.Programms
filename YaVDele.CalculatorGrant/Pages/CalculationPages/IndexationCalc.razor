@@ -84,18 +84,11 @@
         IndexDiff = (IndexDiff == false) ? true : false;
     }
 
-    public void OnSubmitIndex()
-    {
-        resIndex = calc.CalculateIndexation(modelIndexation.priceBefore, modelIndexation.priceAfter, modelIndexation.quantity);
-    }
+    public void OnSubmitIndex() => resIndex = calc.CalculateIndexation(modelIndexation.priceBefore, modelIndexation.priceAfter, modelIndexation.quantity);
+    
 
-    public void OnSubmitIndexPercent()
-    {
-        resPercent = calc.CalculateIndexationPercent(modelPercentIndexation.priceBefore, modelPercentIndexation.indexationPercent, modelPercentIndexation.quantity);
-    }
+    public void OnSubmitIndexPercent() => resPercent = calc.CalculateIndexationPercent(modelPercentIndexation.priceBefore, modelPercentIndexation.indexationPercent, modelPercentIndexation.quantity);
 
-    public void Back()
-    {
-        navigationManager.NavigateTo("/gcalc");
-    }
+
+    public void Back() => navigationManager.NavigateTo("/gcalc");
 }
