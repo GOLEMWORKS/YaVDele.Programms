@@ -16,9 +16,10 @@
             Читать
         </button>
         <button class="btn btn-success"
-                type="button">
+                type="button"
+                @onclick="@((args) => ConvertToExel())">
             <i class="oi oi-arrow-circle-top"></i>
-            В&nbsp;Exel
+            В Excel
         </button>
         <button class="btn btn-success"
                 type="button">
@@ -37,12 +38,13 @@
             <li 
             class="li-select-file"
             tabindex="1"
-            @onclick="@((args) => SelectFile(item))">@item.FileName</li>
+            @onfocus="@((args) => SelectFile(item))">@item.FileName</li>
         }
     </ul>
 </div>
 
-
+@selectedFileObject
+<div style="height: 100%;" @onclick="@sfo"></div>
 @code {
     [Parameter]
     [EditorRequired]
@@ -56,6 +58,11 @@
 
     FileObject selectedFileObject = null;
 
+    public void sfo()
+    {
+        selectedFileObject = null;
+    }
+
     public List<FileObject> GetFilesInFolder()
     {
         List<FileObject> filesInFolder = fileUpload.GetFilesList();
@@ -66,7 +73,8 @@
     {
         selectedFileObject = new FileObject{
                 FileName = file.FileName,
-                FilePath = file.FilePath
+                FilePath = file.FilePath,
+                FileExtension = file.FileExtension
         };
     }
 
@@ -75,6 +83,15 @@
         if (selectedFileObject != null)
         {
             fileLogic.FileDelete(selectedFileObject);
+            await filesInFolderChanged.InvokeAsync();
+        }
+    }
+
+    async Task ConvertToExel()
+    {
+        if (selectedFileObject != null)
+        {
+            fileLogic.FileReadAsTable(selectedFileObject);
             await filesInFolderChanged.InvokeAsync();
         }
     }

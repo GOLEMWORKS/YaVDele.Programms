@@ -63,7 +63,8 @@ namespace YaVDele.CalculatorGrant.Data
                 fileObjectList.Add(new FileObject()
                 {
                     FileName = Path.GetFileName(file),
-                    FilePath = Path.GetDirectoryName(file)
+                    FilePath = Path.GetDirectoryName(file),
+                    FileExtension = Path.GetExtension(file)
                 });
             }  
             
