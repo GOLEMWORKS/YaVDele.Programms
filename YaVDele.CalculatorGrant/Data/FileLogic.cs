@@ -1,5 +1,5 @@
 ﻿using GemBox.Spreadsheet;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using YaVDele.CalculatorGrant.Data.Objects;
 
 namespace YaVDele.CalculatorGrant.Data
@@ -11,23 +11,26 @@ namespace YaVDele.CalculatorGrant.Data
             string pathToDelete = Path.Combine(file.FilePath, file.FileName);
             if (File.Exists(pathToDelete)) File.Delete(pathToDelete);
         }
-
         public void FileReadAsTable(FileObject file)    
         {
             string path = Path.Combine(file.FilePath, file.FileName);
             if (file.FileExtension == ".json")
             {
-                SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
-
-                ExcelFile excelFile = new ExcelFile();
-                ExcelWorksheet worksheet = excelFile.Worksheets.Add(file.FileName);
-
-                dynamic dyn = JsonConvert.DeserializeObject(File.ReadAllText(path));
-
-                worksheet.CodeName = file.FileName;
+                //var jObject = DeserializeJSON(file);
                 
+                SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+                var workbook = new ExcelFile();
+                var worksheet = workbook.Worksheets.Add(file.FileName);
 
+                worksheet.Cells["A1"].Value = "solevaya bebra";
+
+                workbook.Save(Path.Combine(file.FilePath, $"{file.FileName}.xlsx"));
             }
         }
+        //public JObject DeserializeJSON(FileObject file)
+        //{
+        //    string json = File.ReadAllText(file.FullPath(file));
+
+        //}
     }
 }
