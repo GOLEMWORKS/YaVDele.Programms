@@ -16,21 +16,22 @@ namespace YaVDele.CalculatorGrant.Data
             string path = Path.Combine(file.FilePath, file.FileName);
             if (file.FileExtension == ".json")
             {
-                //var jObject = DeserializeJSON(file);
-                
+                var allJsonData = DeserializeJSON(file);
+                dynamic jsonSpecData = allJsonData[0];
+
                 SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
                 var workbook = new ExcelFile();
                 var worksheet = workbook.Worksheets.Add(file.FileName);
 
-                worksheet.Cells["A1"].Value = "solevaya bebra";
+                //worksheet.Cells.Value = jsonSpecData[0][1][0];
 
                 workbook.Save(Path.Combine(file.FilePath, $"{file.FileName}.xlsx"));
             }
         }
-        //public JObject DeserializeJSON(FileObject file)
-        //{
-        //    string json = File.ReadAllText(file.FullPath(file));
-
-        //}
+        public dynamic DeserializeJSON(FileObject file)
+        {
+            dynamic objInfo = JArray.Parse(File.ReadAllText(file.FullPath(file)));
+            return objInfo;
+        }
     }
 }
