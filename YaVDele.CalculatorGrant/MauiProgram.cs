@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using YaVDele.CalculatorGrant.Data;
-using YaVDele.CalculatorGrant.Data.Objects;
 
 namespace YaVDele.CalculatorGrant
 {
