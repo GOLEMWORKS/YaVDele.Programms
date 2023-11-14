@@ -37,14 +37,8 @@ namespace YaVDele.CalculatorGrant
             builder.Services.AddBlazorWebViewDeveloperTools();
 		    builder.Logging.AddDebug();
 #endif
-
-            builder.Services.AddSingleton<FileObject>();
-
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddSingleton<Calculations>();
-            builder.Services.AddSingleton<JSONReader>();
-            builder.Services.AddSingleton<FileUpload>();
-            builder.Services.AddSingleton<FileLogic>();
 
             return builder.Build();
         }
