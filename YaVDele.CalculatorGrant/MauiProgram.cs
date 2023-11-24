@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using YaVDele.CalculatorGrant.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace YaVDele.CalculatorGrant
 {
@@ -24,13 +26,16 @@ namespace YaVDele.CalculatorGrant
 
                     //maler
                     fonts.AddFont("Maler.ttf", "Maler");
-
+                        
                     //beachwood
                     fonts.AddFont("beachwood.otf", "Beachwood");
                 });
 
+            var connectionString = builder.Configuration.GetConnectionString("AppDB");
+
             builder.Services.AddLocalization();
             builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddDbContextFactory<AppDbContext>(options => options.UseSqlite(connectionString));
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();

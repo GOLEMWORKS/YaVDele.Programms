@@ -4,5 +4,8 @@
       "commandName": "MsixPackage",
       "nativeDebugging": false
     }
+  },
+  "ConnectionStrings": {
+    "AppDB": "Data Source=Data\\AppDatabase.db"
   }
 }
