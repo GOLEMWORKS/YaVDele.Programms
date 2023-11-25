@@ -15,6 +15,7 @@ namespace YaVDele.CalculatorGrant.Data
             if (Database is not null)
                 return;
 
+            await Database.EnableWriteAheadLoggingAsync();
             Database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
             var result = await Database.CreateTableAsync<VolounteresJobList>();
         }
