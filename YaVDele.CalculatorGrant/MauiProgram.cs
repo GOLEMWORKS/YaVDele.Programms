@@ -38,6 +38,7 @@ namespace YaVDele.CalculatorGrant
 #endif
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddSingleton<Calculations>();
+            builder.Services.AddSingleton<AppDBContext>();
 
             return builder.Build();
         }
