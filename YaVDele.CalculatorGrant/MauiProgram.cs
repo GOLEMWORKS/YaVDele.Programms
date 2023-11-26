@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using YaVDele.CalculatorGrant.Data;
+using YaVDele.CalculatorGrant.Services.JobServices;
 
 namespace YaVDele.CalculatorGrant
 {
@@ -36,7 +37,12 @@ namespace YaVDele.CalculatorGrant
             builder.Services.AddBlazorWebViewDeveloperTools();
 		    builder.Logging.AddDebug();
 #endif
+            var dbPath 
+                = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"VolounterJobsDB.db3");
+
             builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddSingleton<IJobRepository, JobService>(p=> 
+                                        ActivatorUtilities.CreateInstance<JobService>(p, dbPath));
             builder.Services.AddSingleton<Calculations>();
 
             return builder.Build();

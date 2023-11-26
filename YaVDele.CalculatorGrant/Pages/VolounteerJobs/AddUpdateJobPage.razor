@@ -1,0 +1,27 @@
+﻿@page "/addupdatevolounteerjob"
+@inject AddUpdateJobPageModel pageModel
+
+<h3>Add Update Job</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="mb-3">
+            <label class="form-label">Id</label>
+            <input type="text" class="form-control" placeholder="Id" @bind="pageModel.Id"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Job Name</label>
+            <input type="text" class="form-control" placeholder="Job Name" @bind="pageModel.JobName" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Salary</label>
+            <input type="text" class="form-control" placeholder="Salary" @bind="pageModel.Salary" />
+        </div>
+    </div>
+</div>
+
+@code {
+    
+}
