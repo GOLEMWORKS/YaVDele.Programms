@@ -11,6 +11,7 @@ namespace YaVDele.CalculatorGrant.Services.JobServices
         public JobService(string dbPath)
         {
             _dbPath = dbPath;
+            InitAsync();
         }
 
         private async Task InitAsync()

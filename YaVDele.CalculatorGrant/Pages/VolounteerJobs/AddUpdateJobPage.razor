@@ -1,5 +1,8 @@
 ﻿@page "/addupdatevolounteerjob"
-@inject AddUpdateJobPageModel pageModel
+
+@using YaVDele.CalculatorGrant.Services.JobServices
+@inject IJobRepository _jobRepository
+
 
 <h3>Add Update Job</h3>
 
@@ -7,7 +10,7 @@
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label">Id</label>
-            <input type="text" class="form-control" placeholder="Id" @bind="pageModel.Id"/>
+            <input type="text" class="form-control" placeholder="Id" @bind="pageModel.Id" />
         </div>
 
         <div class="mb-3">
@@ -19,9 +22,30 @@
             <label class="form-label">Salary</label>
             <input type="text" class="form-control" placeholder="Salary" @bind="pageModel.Salary" />
         </div>
+        <button type="submit" class="btn btn-sm btn-success" @onclick="AddJobInfo">Подтвердить</button>
     </div>
 </div>
 
 @code {
-    
+    AddUpdateJobPageModel pageModel = new();
+
+    public async void AddJobInfo()
+    {
+        var job = new VolounteerJobInfo();
+
+        job.Id = pageModel.Id;
+        job.JobName = pageModel.JobName;
+        job.Salary = pageModel.Salary;
+
+        var response = await _jobRepository.AddUpdateJobAsync(job);
+        if (response)
+        {
+            if (pageModel.Id == 0) await App.Current.MainPage.DisplayAlert("Сохранено", "Изменения сохранены успешно!", "Ok");
+            else await App.Current.MainPage.DisplayAlert("Обновлено", "Данные успешно обновлены!", "Ok");
+        }
+        else
+        {
+            await App.Current.MainPage.DisplayAlert("Ошибка :(", "Не удалось установить соедингение с БД", "Ok");
+        }
+    }
 }
