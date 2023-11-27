@@ -46,7 +46,8 @@ namespace YaVDele.CalculatorGrant.Services.JobServices
 
         public async Task<VolounteerJobInfo> GetJobsAsync(int jobId)
         {
-            return await _database.Table<VolounteerJobInfo>().Where(p=> p.Id == jobId).FirstOrDefaultAsync();
+            var res = await _database.Table<VolounteerJobInfo>().FirstOrDefaultAsync(p => p.Id == jobId);
+            return res;
         }
     }
 }

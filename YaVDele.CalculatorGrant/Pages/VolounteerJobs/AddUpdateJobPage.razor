@@ -1,8 +1,9 @@
 ﻿@page "/addupdatevolounteerjob"
+@page "/updatejobinfo/{JobId:int}"
 
 @using YaVDele.CalculatorGrant.Services.JobServices
 @inject IJobRepository _jobRepository
-
+@inject NavigationManager navigationManager
 
 <h3>Add Update Job</h3>
 
@@ -23,11 +24,33 @@
             <input type="text" class="form-control" placeholder="Salary" @bind="pageModel.Salary" />
         </div>
         <button type="submit" class="btn btn-sm btn-success" @onclick="AddJobInfo">Подтвердить</button>
+        <button type="submit" class="btn btn-sm btn-danger" @onclick="Back">Назад</button>
     </div>
 </div>
 
+@Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"VolounterJobsDB.db3")
+
 @code {
     AddUpdateJobPageModel pageModel = new();
+
+    [Parameter]
+    public int JobId { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        base.OnInitialized();
+        pageModel.Id = JobId;
+        if (pageModel.Id > 0)
+        {
+            var responce = _jobRepository.GetJobsAsync(pageModel.Id);
+            pageModel.JobName = responce.Result.JobName;
+            pageModel.Salary = responce.Result.Salary;
+            StateHasChanged();
+        }
+
+    }
+
+    public void Back() => navigationManager.NavigateTo("/vworkpage");
 
     public async void AddJobInfo()
     {
@@ -42,10 +65,11 @@
         {
             if (pageModel.Id == 0) await App.Current.MainPage.DisplayAlert("Сохранено", "Изменения сохранены успешно!", "Ok");
             else await App.Current.MainPage.DisplayAlert("Обновлено", "Данные успешно обновлены!", "Ok");
+            Back();
         }
         else
         {
-            await App.Current.MainPage.DisplayAlert("Ошибка :(", "Не удалось установить соедингение с БД", "Ok");
+            await App.Current.MainPage.DisplayAlert("Ошибка :(", "Не удалось установить соединение с БД", "Ok");
         }
     }
 }
